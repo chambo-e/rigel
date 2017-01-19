@@ -10,6 +10,10 @@ import (
 	redis "gopkg.in/redis.v5"
 )
 
+// RedisOptions is the remote redis configuration
+// https://godoc.org/gopkg.in/redis.v5#Options
+type RedisOptions redis.Options
+
 // Rigel is client struct
 type Rigel struct {
 	redis       *redis.Client
@@ -28,9 +32,9 @@ type Rigel struct {
 
 // Config represents Rigel configuration
 type Config struct {
-	// Redis is the remote redis configuration https://godoc.org/gopkg.in/redis.v5#Options
+	// Redis is the remote redis configuration
 	// If it's empty it will connect to redis://localhost:6379 by default
-	Redis redis.Options
+	Redis RedisOptions
 	// Namespace is the namespace that needs to be used to isolates keys and publish messages on redis.
 	// Default is "rigel"
 	Namespace string
@@ -62,7 +66,8 @@ func New(config Config) (*Rigel, error) {
 		config.Hostname, _ = os.Hostname()
 	}
 
-	client := redis.NewClient(&config.Redis)
+	opts := redis.Options(config.Redis)
+	client := redis.NewClient(&opts)
 	if err := client.Ping().Err(); err != nil {
 		return nil, err
 	}
