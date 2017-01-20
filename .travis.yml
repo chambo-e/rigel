@@ -18,6 +18,9 @@ before_install:
 install:
     - "github.com/stretchr/testify/assert"
 
-script: go test -coverprofile=c.out $(go list ./... | grep -v /vendor/)
+script:
+    - go test -race -coverprofile=coverage.txt -covermode=atomic $(go list ./... | grep -v /vendor/)
 
-after_success: go tool cover -func=c.out
+after_success:
+    - go tool cover -func=coverage.txt
+    - bash <(curl -s https://codecov.io/bash)
