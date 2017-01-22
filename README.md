@@ -6,7 +6,6 @@ Rigel aims to be a fast and efficient task (or job) queue alternative to Celery,
 - [Features](features)
 - [Example](#example)
 - [Contributing](#contributing)
-
   - [Why Redis ?](#why-redis-)
   - [Why not `insert message_queue_system` ?](#user-content-why-not-insert-message_queue_system-)
 
