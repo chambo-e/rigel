@@ -16,7 +16,7 @@ before_install:
     - docker run -d -p 27017:27017 "redis:$REDIS_VERSION"
 
 install:
-    - "github.com/stretchr/testify/assert"
+    - go get github.com/stretchr/testify/assert
 
 script:
     - go test -race -coverprofile=coverage.txt -covermode=atomic $(go list ./... | grep -v /vendor/)
