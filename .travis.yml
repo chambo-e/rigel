@@ -13,7 +13,7 @@ go:
     - tip
 
 before_install:
-    - docker run -d -p 27017:27017 "redis:$REDIS_VERSION"
+    - docker run -d -p 6379:6379 "redis:$REDIS_VERSION"
 
 install:
     - go get github.com/stretchr/testify/assert
