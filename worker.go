@@ -85,8 +85,8 @@ L:
 func (w *worker) broadcastStart() {
 	if _, err := w.redis.Pipelined(func(pipe *redis.Pipeline) error {
 		pipe.SAdd(fmt.Sprintf("%s:workers", w.namespace), fmt.Sprintf("%s:%s", w.hostname, w.id))
-		pipe.HMSet(fmt.Sprintf("%s:worker:%s:%s", w.namespace, w.hostname, w.id), map[string]string{"started": time.Now().String()})
-		pipe.Publish(fmt.Sprintf("%s:worker:%s:%s:started", w.namespace, w.hostname, w.id), time.Now().String())
+		pipe.HMSet(fmt.Sprintf("%s:worker:%s:%s", w.namespace, w.hostname, w.id), map[string]string{"started": time.Now().Format(time.RFC3339)})
+		pipe.Publish(fmt.Sprintf("%s:worker:%s:%s:started", w.namespace, w.hostname, w.id), time.Now().Format(time.RFC3339))
 
 		// Set state to STARTED
 		// Done here instead of setState to take advantage of the current MULTI EXEC
